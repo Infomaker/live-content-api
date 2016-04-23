@@ -2,5 +2,6 @@
 'use strict';
 
 module.exports = {
-    Websocket: require('./access-points/Websocket')
+    Websocket: require('./access-points/Websocket'),
+    REST : require('./access-points/REST')
 };
