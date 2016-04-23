@@ -1,6 +1,6 @@
 {
   "name": "live-content-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "APIs to interact with Infomakers Live Content service",
   "author": "Jacob Tallberg and Jimmy Bernljung",
   "license": "ISC",

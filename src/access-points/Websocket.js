@@ -34,7 +34,12 @@ var io = require('socket.io-client');
 function Websocket(config) {
   this.callbacks = [];
   this.socket = io(config.url);
-  this.log = config.log;
+
+  if(config.hasOwnProperty('log')){
+    this.log = config.log;
+  } else {
+    this.log = true;
+  }
 
   this.socket.on('connect', function () {
     if (this.log) {
@@ -55,9 +60,19 @@ function Websocket(config) {
       console.log("LCA.Websocket: Received msg: ", msg);
     }
     var callbackIndex = msg.customId - 1;
-    var lastEventReceived = this.callbacks[callbackIndex](msg.payload.action, msg.payload.data);
-    if(lastEventReceived){
-      delete this.callbacks[callbackIndex];
+
+    var callbackFun = this.callbacks[callbackIndex];
+
+    if(callbackFun){
+      var lastEventReceived = callbackFun(msg.payload.action, msg.payload.data);
+      if(lastEventReceived === true){
+        if (this.log) {
+          console.log("LCA.Websocket: Removing callback for customId " + msg.customId + " as ordered by callback (return value true)");
+        }
+        delete this.callbacks[callbackIndex];
+      }
+    } else {
+       throw new Error('Received message but no registered callback for customId ' + msg.customId);
     }
   }.bind(this));
 }
