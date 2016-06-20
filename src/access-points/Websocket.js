@@ -33,7 +33,7 @@ var io = require('socket.io-client');
 
 function Websocket(config) {
   this.callbacks = [];
-  this.socket = io(config.url);
+  this.socket = io(config.url, config.ioConfig);
 
   if(config.hasOwnProperty('log')){
     this.log = config.log;
