@@ -1,7 +1,7 @@
 /*jslint node: true, browser: true*/
 'use strict';
 
-var request = require('browser-request');
+var popsicle = require('popsicle');
 
 function REST(config) {
   this.url = config.url + '/request';
@@ -20,14 +20,14 @@ REST.prototype.request = function (lcaReq, callback) {
     console.log("LCA.REST: Requesting (req "+ localReqId+ ") '" + lcaReq.action + "': ", lcaReq);
   }
 
-  request({
+  popsicle.request({
     method : 'POST',
-    uri : this.url,
+    url : this.url,
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(lcaReq)
-  }, function(err, res){
+  }).exec(function(err, res){
     if(err){
       throw err;
     }
