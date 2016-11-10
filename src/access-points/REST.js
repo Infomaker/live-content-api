@@ -32,7 +32,7 @@ REST.prototype.request = function (lcaReq, callback) {
       throw err;
     }
 
-    var response = JSON.parse(res.response);
+    var response = res.body;
     if (this.log) {
       console.log("LCA.REST: Received reply (req " + localReqId + ") '" + response.action + "': ", response.data);
      }
